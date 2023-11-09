@@ -8,13 +8,17 @@ export default function Home() {
 	const banks = useSelector((state: RootState) => state.banks);
 
 	useEffect(() => {
-		// Verificar si ya tienes los bancos en el estado antes de hacer la solicitud
 		if (!banks) {
-			fetch('https://dev.obtenmas.com/catom/api/challenge/banks')
+			fetch('/api/banks')
 				.then((res) => res.json())
 				.then((data) => {
-					// Luego, utiliza el despachador para almacenar los datos en el estado
 					dispatch(setBanks(data));
+				})
+				.catch((error) => {
+					console.error(
+						'Error al obtener datos del servidor proxy',
+						error
+					);
 				});
 		}
 	}, [banks, dispatch]);
